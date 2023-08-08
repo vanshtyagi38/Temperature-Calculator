@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="temp.css">
+        <link rel="stylesheet" href="styles.css">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                position: relative;
+            }
+    
+            video {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                z-index: -1;
+            }
+    
+            .container {
+                position: relative;
+                z-index: 1;
+                padding: 20px;
+                text-align: center;
+                color: #fff;
+            }
+    
+            /* Additional styles for the title and input elements */
+            .title {
+                margin-bottom: 20px;
+            }
+    
+            #celsius, #fahrenheit, #kelvin {
+                margin-bottom: 10px;
+            }
+    
+            /* Add any other styles you need for the content */
+        </style>
+    </head>
+    <body>
+        <video autoplay loop muted>
+            <source src="SaveTube.io-Causes and Effects of Climate Change _ National Geographic.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    
+
+    <div class="container">
+        <div class="title">
+            <h1>Temperature Converter</h1>
+            <span class="Temperature-icon"><i class="fa-solid fa-temperature-three-quarters"></i></span>
+        </div>
+
+        <div id="celsius">
+            <input type="number" name="" placeholder="Celsius" oninput="convertTemperature('celsius')">
+            <span class="icon">&#8451;</span>
+        </div>
+        <div id="fahrenheit">
+            <input type="number" name="" placeholder="Fahrenheit" oninput="convertTemperature('fahrenheit')">
+            <span class="icon">&#8457;</span>
+        </div>
+        <div id="kelvin">
+            <input type="number" name="" placeholder="Kelvin" oninput="convertTemperature('kelvin')">
+            <span class="icon">&#8490;</span>
+        </div>
+
+        <div class="button">
+            <button onclick="clearFields()">All Clear</button>
+        </div>
+
+        <!-- Add the "Made By: Vansh Tyagi" footer here -->
+        <div style="text-align: center; margin-top: 30px; color: #d16565;">
+            Made By: Vansh Tyagi
+        </div>
+    </div>
+
+    <script>
+        function convertTemperature(fromUnit) {
+            const celsiusInput = document.getElementById('celsius').querySelector('input');
+            const fahrenheitInput = document.getElementById('fahrenheit').querySelector('input');
+            const kelvinInput = document.getElementById('kelvin').querySelector('input');
+
+            const temperature = parseFloat(celsiusInput.value);
+
+            if (isNaN(temperature)) {
+                fahrenheitInput.value = '';
+                kelvinInput.value = '';
+                return;
+            }
+
+            switch (fromUnit) {
+                case 'celsius':
+                    fahrenheitInput.value = (temperature * 9/5) + 32;
+                    kelvinInput.value = temperature + 273.15;
+                    break;
+                case 'fahrenheit':
+                    const fTemp = parseFloat(fahrenheitInput.value);
+                    if (!isNaN(fTemp)) {
+                        celsiusInput.value = (fTemp - 32) * 5/9;
+                        kelvinInput.value = (fTemp - 32) * 5/9 + 273.15;
+                    } else {
+                        celsiusInput.value = '';
+                        kelvinInput.value = '';
+                    }
+                    break;
+                case 'kelvin':
+                    const kTemp = parseFloat(kelvinInput.value);
+                    if (!isNaN(kTemp)) {
+                        celsiusInput.value = kTemp - 273.15;
+                        fahrenheitInput.value = (kTemp - 273.15) * 9/5 + 32;
+                    } else {
+                        celsiusInput.value = '';
+                        fahrenheitInput.value = '';
+                    }
+                    break;
+            }
+        }
+
+        function clearFields() {
+            const inputs = document.querySelectorAll('.container input[type="number"]');
+            inputs.forEach(input => input.value = '');
+        }
+    </script>
+</body>
+</html>
